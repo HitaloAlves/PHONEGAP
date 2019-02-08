@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Teste 1</title>
+
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+		
+		<script type="text/javascript">
+		
+		window.onload=function(){
+
+			$("#longitude").hide();
+			$("#latitude").hide();
+			$("#local").hide();
+			$("#btn1").attr('disabled','disabled');
+			$("#btn2").attr('disabled','disabled');
+			$("#mensagem").html("Aguarde...")
+
+			document.addEventListener('deviceready',iniciar);
+		}	
+
+		function iniciar(){
+			//alert("Disposito Pronto");
+
+			navigator.geolocation.getCurrentPosition(geoSucesso,geoErro);
+		}
+
+		function geoSucesso(dados){
+
+			var lat=dados.coords.latitude;
+			var lon=dados.coords.longitude;
+
+			//console.log("Latitude:" + lat);
+			//console.log("Longitude" + lon);
+
+			$("#mensagem").html("Posição Definida")
+
+			$("#latitude").html("Sua Latitude:" + lat);
+			$("#longitude").html("Sua Longitude" + lon);
+			$("#btn1").removeAttr('disabled');
+		}
+
+		function geoErro(e){
+			alert("Houve um erro :" + e.message);
+		}
+
+		function exibeGeo(){
+			$("#latitude").show();
+			$("#longitude").show();
+			$("#local").show();
+			$("#mensagem").hide();
+			$("#btn2").removeAttr('disabled');
+			$("#btn1").attr('disabled','disabled');
+		}
+		
+		</script>
+
+		<style>
+			
+			#rodape{
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+			}
+
+
+		</style>
+
+    </head>
+    <body>
+
+    	<div data-role="page" id="principal">
+    		<div data-role="header">
+    			<h1>Meu App v. 1.0.0</h1>
+    		</div>
+
+    		<div data-role="main" id="conteudo" class="ui-content">
+
+    			<div id="latitude"></div>
+    			<div id="longitude"></div>
+    			<div id="local"> </div>
+    			<div id="mensagem"></div>
+
+    			<button id="btn1" onclick="exibeGeo()">Exibir Geolocalização</button>
+    			<button id="btn2">Exibir Mapa</button>	
+    		</div>
+
+    		<div data-role="footer" id="rodape">
+    			<h1>Todos os direitos reservados</h1>
+    		</div>
+
+    	</div>
+    	<script type="text/javascript" src="js/jquery.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>
